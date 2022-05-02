@@ -1,6 +1,8 @@
+import 'horario.dart';
+
 class Atividade {
-  String horarioInicio;
-  String? horarioTermino;
+  Horario horarioInicio;
+  Horario? horarioTermino;
   String conteudo;
   int prioridade;
   bool completo;
