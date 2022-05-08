@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class Horario extends TimeOfDay {
   const Horario({required int hour, required int minute}) : super(hour: hour, minute: minute);
 
+  const Horario.fromMinutes(int minutes) : super(hour: minutes ~/ 60, minute: minutes - (minutes ~/ 60));
+
   @override
   String toString() {
     String buffer = "";

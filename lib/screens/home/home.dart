@@ -23,6 +23,7 @@ class Home extends StatelessWidget {
                         atividade: Atividade(
                             horarioInicio: const Horario(hour: 8, minute: 0),
                             conteudo: "conteudo",
+                            duracaoEmMinutos: 10,
                             prioridade: 0,
                             completo: false),
                       )),

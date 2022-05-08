@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_alan/models/horario.dart';
 import 'package:todo_alan/widgets/atividade_form_field.dart';
+import 'package:todo_alan/widgets/time_picker.dart';
 
 import '../../models/contador_horario.dart';
 import '../../styles/colors.dart';
@@ -16,6 +18,7 @@ class Modal extends StatefulWidget {
 class _ModalState extends State<Modal> {
   late TextEditingController nomeController;
   late TextEditingController descricaoController;
+  Horario? selectedTime;
   ContadorHorario contador = ContadorHorario(0);
   @override
   void initState() {
@@ -36,7 +39,7 @@ class _ModalState extends State<Modal> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: SingleChildScrollView(
-        reverse: true,
+        physics: const BouncingScrollPhysics(),
         child: Container(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           decoration: const BoxDecoration(
@@ -55,38 +58,59 @@ class _ModalState extends State<Modal> {
                 AtividadeFormField(
                   controller: descricaoController,
                   label: "Descrição",
+                  maxLines: 3,
                   hintText: "Insira uma descrição",
                 ),
                 const SizedBox(height: 10),
-                const Text("Horário de início",
-                    style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 5),
-                InkWell(
-                  onTap: () {
-                    showTimePicker(context: context, initialTime: TimeOfDay.now());
-                  },
-                  child: Card(
-                    elevation: 5,
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(45))),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: free, borderRadius: const BorderRadius.all(Radius.circular(45))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                        child: Row(
-                          children: const [
-                            Icon(
-                              Icons.alarm,
-                              color: principal,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text("Horário de início",
+                        style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    InkWell(
+                      onTap: () async {
+                        final result = await showDialog<DateTime?>(
+                            context: context, builder: (context) => const TimePicker());
+                        if (result != null) {
+                          final int _hour = result.hour;
+
+                          final int _minute = result.minute;
+                          setState(() => selectedTime = Horario(hour: _hour, minute: _minute));
+                        }
+                      },
+                      child: Card(
+                        elevation: 5,
+                        shape:
+                            const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(45))),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: free, borderRadius: const BorderRadius.all(Radius.circular(45))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.alarm,
+                                  color: principal,
+                                ),
+                                const SizedBox(width: 20),
+                                Text(
+                                    selectedTime != null
+                                        ? selectedTime.toString()
+                                        : "Toque para definir um horário",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight:
+                                            selectedTime != null ? FontWeight.bold : FontWeight.normal)),
+                              ],
                             ),
-                            SizedBox(width: 20),
-                            Text("Toque para definir o horário",
-                                style: TextStyle(fontSize: 14, color: Colors.black)),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
                 const SizedBox(height: 10),
                 ContadorDuracao(
