@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+const Color principal = Color.fromRGBO(35, 57, 91, 0.95);
+
 /// Most important
 LinearGradient p0 = _makeGradient([
   const Color.fromRGBO(22, 25, 35, 0.95),
@@ -22,8 +24,8 @@ LinearGradient p3 = _makeGradient([
 ]);
 
 LinearGradient free = _makeGradient([
-  const Color.fromARGB(241, 122, 241, 213),
-  const Color.fromRGBO(122, 241, 213, 0.6),
+  const Color.fromARGB(220, 244, 152, 99),
+  const Color.fromARGB(140, 244, 152, 99),
 ]);
 
 LinearGradient _makeGradient(List<Color> colors) {

@@ -28,15 +28,16 @@ class AtividadeCard extends StatelessWidget {
             children: [
               _Clock(
                 horarioInicio: atividade.horarioInicio,
+                horarioTermino: atividade.horarioTermino,
               ),
               Expanded(
                   child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.center,
-                        child: Text("Acordar",
-                            style:
-                                TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.normal)),
+                        child: Text(atividade.conteudo,
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.white, fontWeight: FontWeight.normal)),
                       )))
             ],
           ),
@@ -49,11 +50,15 @@ class AtividadeCard extends StatelessWidget {
 class _Clock extends StatelessWidget {
   final Horario horarioInicio;
   final Horario? horarioTermino;
-  const _Clock({Key? key, required this.horarioInicio, this.horarioTermino}) : super(key: key);
+  const _Clock({Key? key, required this.horarioInicio, required this.horarioTermino}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String content = horarioInicio.toString();
+    String content = horarioInicio.toString();
+
+    if (horarioTermino != null) {
+      content += " - " + horarioTermino!.toString();
+    }
     return Container(
       decoration:
           const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(15))),

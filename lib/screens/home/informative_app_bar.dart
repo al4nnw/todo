@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_alan/styles/colors.dart';
 
+import '../../widgets/gradient_text_button.dart';
+
 class InformativeAppBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -88,23 +90,10 @@ class InformativeAppBar extends SliverPersistentHeaderDelegate {
                         const SizedBox(height: 10),
                         Align(
                           alignment: Alignment.center,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                gradient: free, borderRadius: const BorderRadius.all(Radius.circular(15))),
-                            padding: EdgeInsets.zero,
-                            child: TextButton.icon(
-                                onPressed: () {},
-                                style: ButtonStyle(
-                                    splashFactory: NoSplash.splashFactory,
-                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    minimumSize: MaterialStateProperty.all(Size.zero),
-                                    backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                                    padding: MaterialStateProperty.all(
-                                        const EdgeInsets.symmetric(horizontal: 20, vertical: 10))),
-                                label: const Icon(Icons.check, color: Colors.black),
-                                icon: const Text("Completar atividade",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.black, fontWeight: FontWeight.normal))),
+                          child: GradientTextButton(
+                            content: "Completar atividade",
+                            icon: Icons.close,
+                            onTap: () {},
                           ),
                         )
                       ],
