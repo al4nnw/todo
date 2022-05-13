@@ -28,7 +28,7 @@ class AtividadeCard extends StatelessWidget {
             children: [
               _Clock(
                 horarioInicio: atividade.horarioInicio,
-                horarioTermino: atividade.horarioTermino,
+                horarioTermino: atividade.duracaoEmMinutos == 0 ? null : atividade.horarioTermino,
               ),
               Expanded(
                   child: Container(
