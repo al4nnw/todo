@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_alan/models/atividade.dart';
 import 'package:todo_alan/models/horario.dart';
 import 'package:todo_alan/widgets/atividade_form_field.dart';
 import 'package:todo_alan/widgets/time_picker.dart';
@@ -119,7 +121,17 @@ class _ModalState extends State<Modal> {
                 const SizedBox(height: 20),
                 Align(
                     alignment: Alignment.center,
-                    child: GradientTextButton(content: "Criar atividade", icon: Icons.add, onTap: () {}))
+                    child: GradientTextButton(
+                        content: "Criar atividade",
+                        icon: Icons.add,
+                        onTap: () {
+                          Hive.openBox("atividades").then((value) => value.add(Atividade(
+                              horarioInicio: const Horario.fromMinutes(0),
+                              conteudo: "conteudo",
+                              duracaoEmMinutos: 20,
+                              prioridade: 1,
+                              completo: false)));
+                        }))
               ],
             ),
           ),

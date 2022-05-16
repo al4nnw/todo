@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_alan/models/atividade.dart';
-import 'package:todo_alan/models/horario.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../styles/colors.dart';
 import 'atividade_card.dart';
@@ -15,19 +14,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Atividade> atividades = [
-    Atividade(
-        horarioInicio: const Horario(hour: 8, minute: 29),
-        conteudo: "conteudo",
-        duracaoEmMinutos: 10,
-        prioridade: 0,
-        completo: false)
-  ];
+  late Iterable atividades;
 
   @override
   void initState() {
+    atividades = [];
     super.initState();
-    print(atividades);
+    Hive.openBox("atividades").then((value) => setState(() => atividades = value.values));
   }
 
   @override
@@ -41,9 +34,9 @@ class _HomeState extends State<Home> {
             SliverList(
                 delegate: SliverChildBuilderDelegate(
                     ((context, index) => AtividadeCard(
-                          atividade: atividades[0],
+                          atividade: atividades.elementAt(index),
                         )),
-                    childCount: 10)),
+                    childCount: atividades.length)),
             SliverToBoxAdapter(
                 child: Padding(
               padding: const EdgeInsets.all(10.0),

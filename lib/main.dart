@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_alan/models/atividade.dart';
+import 'models/horario.dart';
 import 'screens/home/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final dir = await getApplicationSupportDirectory();
-
+  await Hive.initFlutter();
+  Hive
+    ..registerAdapter(AtividadeAdapter())
+    ..registerAdapter(HorarioAdapter());
   runApp(const MyApp());
 }
 

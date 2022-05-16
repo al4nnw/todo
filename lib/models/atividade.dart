@@ -1,15 +1,26 @@
-import 'horario.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+import 'horario.dart';
+part "atividade.g.dart";
+
+@HiveType(typeId: 1)
 class Atividade {
+  @HiveField(0)
   Horario horarioInicio;
 
+  @HiveField(1)
   Horario? horarioTermino;
+
+  @HiveField(2)
   String conteudo;
 
+  @HiveField(3)
   int prioridade;
 
+  @HiveField(4)
   bool completo;
 
+  @HiveField(5)
   int duracaoEmMinutos;
 
   Atividade({

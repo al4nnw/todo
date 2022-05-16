@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Horario extends TimeOfDay {
   const Horario({required int hour, required int minute}) : super(hour: hour, minute: minute);
@@ -26,4 +27,14 @@ class Horario extends TimeOfDay {
     buffer += minute.toString();
     return buffer;
   }
+}
+
+class HorarioAdapter extends TypeAdapter<Horario> {
+  @override
+  int get typeId => 2;
+  @override
+  Horario read(BinaryReader reader) => Horario.fromMinutes(reader.read());
+
+  @override
+  void write(BinaryWriter writer, Horario obj) => writer.write(obj.asMinutes);
 }
